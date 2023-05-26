@@ -22,17 +22,18 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Please check the number", Toast.LENGTH_SHORT).show()
         }
     }
-
+    private fun String.removeWhitespaces() = replace(" ", "")
     private fun startWhatsapp(number: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setPackage("com.whatsapp")
-        val data:String = if(number[0] == '+'){
+        var data:String = if(number[0] == '+'){
             number.substring(1)
         }else if(number.length == 10){
             "91$number"
         }else{
             number
         }
+        data = data.removeWhitespaces()
         intent.data = Uri.parse("https://wa.me/$data")
         try {
             startActivity(intent)
